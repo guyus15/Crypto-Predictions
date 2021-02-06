@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, render_template
 from prices import Prices
 
 app = Flask(__name__)

@@ -36,7 +36,6 @@ class Prices:
                         simplified_data = data[i]
 
                 self.target_time += timedelta(minutes=5)
-                
                 return simplified_data
             except (ConnectionError, Timeout, TooManyRedirects) as e:
                 print(e)
