@@ -27,7 +27,7 @@ def get_info():
         currency = request.args.get('currency')
         print("Currency: " + currency)
         coin = currency_info.query.filter_by(name=currency).first()
-        json_string = "{" + coin.name +"," + coin.symbol + "," + coin.description + "," + coin.date_added + "," + coin.website + "}"
+        json_string = "{" + "name:"+coin.name +"," + "symbol:"+coin.symbol + "," + "description:"+coin.description + "," + "date_added:"+coin.date_added + "," + "website:"+coin.website + "}"
         #currency_info = Prices(currency)
         #return jsonify(currency_info.get_info())
         return jsonify(json_string)
