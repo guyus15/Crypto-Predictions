@@ -29,7 +29,8 @@ def get_info():
         coin = currency_info.query.filter_by(name=currency).first()
         print(coin.symbol)
         #currency_info = Prices(currency)
-        return jsonify(currency_info.get_info())
+        #return jsonify(currency_info.get_info())
+        return jsonify(coin)
 
 @app.route('/getprice')
 def get_price():
