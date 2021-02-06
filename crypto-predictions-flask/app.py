@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///crypto_data.db"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SECRET_KEY"] = "SECRETKEY"
 db = SQLAlchemy(app)
 
@@ -21,12 +22,13 @@ class currency_info(db.Model):
     technical_doc = db.Column(db.String(30))
 
 
-
 @app.route('/getinfo')
 def get_info():
         currency = request.args.get('currency')
         print("Currency: " + currency)
-        currency_info = Prices(currency)
+        coin = currency_info.query.filter_by(name=currency).first()
+        print(coin.symbol)
+        #currency_info = Prices(currency)
         return jsonify(currency_info.get_info())
 
 @app.route('/getprice')
