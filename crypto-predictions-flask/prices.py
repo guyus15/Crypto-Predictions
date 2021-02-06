@@ -10,7 +10,7 @@ class Prices:
         'Accepts': 'application/json',
         'X-CMC_PRO_API_KEY': '312a4a71-566e-4cbe-aea8-538eb53e259c',
         }
-
+        self.currency = currency
         self.session = Session()
         self.session.headers.update(self.headers)
 
@@ -28,7 +28,7 @@ class Prices:
     def get_info(self):
         url = self.url+"/info"
         parameters = {
-            'slug':'bitcoin',
+            'slug':self.currency,
             }
         data = self.fetch(url,parameters)
         return data
