@@ -1,10 +1,12 @@
 from flask import Flask
+from prices import Prices
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-  return "Welcome to the Crypto Predictor"
+        bitcoin = Prices("bitcoin")
+        return bitcoin.get_info()
 
 if __name__ == "__main__":
   app.run()
