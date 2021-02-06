@@ -24,6 +24,8 @@ class DataBox extends React.Component {
               <WatchListItem text="Test Text"></WatchListItem>
               <WatchListItem text="Test Text"></WatchListItem>
               <WatchListItem text="Test Text"></WatchListItem>
+              <WatchListItem text="Test Text"></WatchListItem>
+              <WatchListItem text="Test Text"></WatchListItem>
             </div>
             ) : (
             <div className={className}>

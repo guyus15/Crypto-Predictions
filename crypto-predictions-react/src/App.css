@@ -42,8 +42,12 @@
 
 .Databox-watchlist{
   display: grid;
+  background-color: #fff;
+
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
+
+  grid-gap:2px;
 }
 
 .Databox-list {
@@ -88,7 +92,7 @@
   font-size: 20px;
   line-height: 25px;
   color:#fff;
-  border: solid #fff 1px;
+  background-color: #666;
 }
 
 .Databox-active {

@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import DataBox from './DataBox';
+import DataBox from './Components/DataBox';
 
 
 class App extends React.Component {
