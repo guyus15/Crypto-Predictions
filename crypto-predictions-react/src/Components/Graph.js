@@ -14,7 +14,7 @@ class Graph extends React.Component {
     let dataValues = this.props.data.data.map(d => d.value);
 
     this.myChart = new Chart(this.chartRef.current, {
-      type: 'bar',
+      type: 'line',
       data: {
         labels:dataLabels,
         datasets: [{

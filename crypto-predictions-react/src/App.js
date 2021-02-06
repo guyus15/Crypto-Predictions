@@ -51,7 +51,33 @@ let categoricalData = {
 
 
 class App extends React.Component {
+  constructor() {
+    super();
+    this.getInfo = this.getInfo.bind(this);
+    this.getPrice = this.getPrice.bind(this);
+  }
+
+  getInfo() {
+    let currency = 'ethereum';
+    fetch(`/getinfo?currency=${currency}`)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      });
+  }
+
+  getPrice() {
+    let currency = 'ethereum';
+    fetch(`/getprice?currency=${currency}`)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      });
+  }
+
   render() {
+    this.getPrice();
+
     return (
       <div className="App-container">
           <CurrentPrice name="Bitcoin (BTC)" price="27500"></CurrentPrice>
