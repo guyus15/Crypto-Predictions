@@ -1,4 +1,5 @@
 import React from 'react'
+import '../stylesheets/CurrentPrice-styles.css'
 
 class CurrentPrice extends React.Component {
   render() {

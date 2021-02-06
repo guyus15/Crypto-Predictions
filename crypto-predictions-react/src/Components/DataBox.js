@@ -1,6 +1,7 @@
 import React from 'react';
 import WatchListItem from './WatchListItem'
 import NewsItem from './NewsItem'
+import '../stylesheets/DataBox-styles.css'
 
 class DataBox extends React.Component {
   constructor(props) {
