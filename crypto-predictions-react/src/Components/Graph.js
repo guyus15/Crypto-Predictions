@@ -1,5 +1,6 @@
 import React from 'react'
 import Chart from 'chart.js'
+import '../stylesheets/Graph-styles.css'
 
 class Graph extends React.Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class Graph extends React.Component {
 
   render() {
     return (
-      <canvas ref={this.chartRef} />
+      <canvas className="Graph-canvas" ref={this.chartRef} />
     )
   }
 }

@@ -5,28 +5,6 @@ import DataBox from './Components/DataBox';
 import CurrentPrice from './Components/CurrentPrice'
 import Graph from './Components/Graph'
 
-let timeSeries = {
-  "title": "Visits",
-  "data": [
-    {
-      "time": "Tue May 01 2018 00:00:00 GMT+0100 (British Summer Time)",
-      "value": 39
-    },
-    {
-      "time": "Wed May 02 2018 00:00:00 GMT+0100 (British Summer Time)",
-      "value": 60
-    },
-    {
-      "time": "Wed June 02 2018 00:00:00 GMT+0100 (British Summer Time)",
-      "value": 60
-    },
-    {
-      "time": "Wed August 02 2018 00:00:00 GMT+0100 (British Summer Time)",
-      "value": 60
-    }
-  ]
-}
-
 let categoricalData = {
   "title": "Categories",
   "data": [
@@ -49,20 +27,27 @@ let categoricalData = {
   ]
 }
 
-
 class App extends React.Component {
   constructor() {
     super();
-    this.getInfo = this.getInfo.bind(this);
-    this.getPrice = this.getPrice.bind(this);
+
+    /*
+    this.state = {
+      currencyPrice: this.getPrice(),
+      currencyInfo: this.getInfo() 
+    }
+
+    //this.getInfo = this.getInfo.bind(this);
+    //this.getPrice = this.getPrice.bind(this);*/
   }
 
+  /*
   getInfo() {
     let currency = 'ethereum';
     fetch(`/getinfo?currency=${currency}`)
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        this.setState({currencyInfo: data})
       });
   }
 
@@ -70,17 +55,26 @@ class App extends React.Component {
     let currency = 'ethereum';
     fetch(`/getprice?currency=${currency}`)
       .then(res => res.json())
-      .then(data => {
-        console.log(data);
+      .then(data => { 
+        this.setState({currencyPrice: data})
       });
-  }
+  }*/
 
   render() {
-    this.getPrice();
+    
+    let currencyName = "Test currency"
+    let currencyPrice = "27500" 
+    /*
+    if (this.state.currencyPrice !== undefined) {
+      currencyName = `${this.state.currencyPrice[0].name} (${this.state.currencyPrice[0].symbol}) `;
+      currencyPrice = this.state.currencyPrice[0].quote.GBP.price;
+      console.log(this.state.currencyPrice);
+    }*/
+
 
     return (
       <div className="App-container">
-          <CurrentPrice name="Bitcoin (BTC)" price="27500"></CurrentPrice>
+          <CurrentPrice name={currencyName} price={currencyPrice}></CurrentPrice>
           <Graph
             data={categoricalData}
             title="Test graph title"
