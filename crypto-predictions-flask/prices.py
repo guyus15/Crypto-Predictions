@@ -12,16 +12,14 @@ class Prices:
         'X-CMC_PRO_API_KEY': '312a4a71-566e-4cbe-aea8-538eb53e259c',
         }
         self.currency = currency
-        self.last_call_time=datetime.now() + timedelta(minutes=6)
+        self.target_time=datetime.now()
         self.session = Session()
         self.session.headers.update(self.headers)
 
     def fetch(self, url, parameters):
-        self.current_time = datetime.now()
-        print(self.current_time)
-        print(self.last_call_time)
-        print(self.current_time-self.last_call_time)
-        if self.last_call_time + timedelta(minutes=5) > self.current_time:
+        current_time = datetime.now()
+        
+        if current_time < self.target_time:
             print("Time between calls too recent")
             return
         else:
@@ -36,9 +34,14 @@ class Prices:
                 for i in data:
                     if i == "data":
                         simplified_data = data[i]
+
+                self.target_time += timedelta(minutes=5)
+                
                 return simplified_data
             except (ConnectionError, Timeout, TooManyRedirects) as e:
                 print(e)
+            
+    
 
     def get_info(self):
         url = self.url+"/info"
