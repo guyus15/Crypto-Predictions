@@ -7,6 +7,38 @@
   height: 100vh;
 }
 
+.CurrentPrice-container {
+  font-family: 'Quicksand', sans-serif;  
+  color:white;
+  padding:20px;
+  letter-spacing: 2px;
+}
+
+.CurrentPrice-name {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 25px;
+  padding:0 0 20px 10px;
+}
+
+.CurrentPrice-price {
+  font-family: Quicksand;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 96px;
+  line-height: 120px;
+}
+
+.CurrentPrice-text {
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 25px;
+  color: #DDDDDD;
+  padding-left: 10px;
+}
+
 .Databoxes {
   display: flex;
   flex-direction: row;
@@ -19,7 +51,8 @@
 }
 
 .Databox-title {
-  font-family: 'Quicksand', sans-serif;  font-style: normal;
+  font-family: 'Quicksand', sans-serif;  
+  font-style: normal;
   font-weight: 700;
   font-size: 20px;
   line-height: 25px;
