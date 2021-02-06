@@ -1,6 +1,5 @@
 import React from 'react'
 import Chart from 'chart.js'
-import '../stylesheets/Graph-styles.css'
 
 class Graph extends React.Component {
   constructor(props) {
@@ -16,6 +15,11 @@ class Graph extends React.Component {
 
     this.myChart = new Chart(this.chartRef.current, {
       type: 'line',
+      color:'rgba(0,0,0,1)',
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
+      },
       data: {
         labels:dataLabels,
         datasets: [{
@@ -25,6 +29,8 @@ class Graph extends React.Component {
         }]
       }
     });
+
+    this.chartRef.current.style = "width: 1870px; height: 340px";
   }
 
   render() {
