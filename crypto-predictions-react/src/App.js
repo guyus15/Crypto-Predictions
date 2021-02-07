@@ -64,7 +64,7 @@ class App extends React.Component {
           <CurrentPrice name={currencyName} price={currencyPrice}></CurrentPrice>
           <Graph
             data={categoricalData}
-            title="Test graph title"
+            title={currencyName}
             color="rgba(0,0,0,0)"
             borderColor="#FFF"
             borderWidth={3}

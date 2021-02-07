@@ -23,7 +23,7 @@
 
 .CurrentPrice-more-button {
   font-family: 'Quicksand', sans-serif;  
-  background-color: #666;
+  background-color: #333;
   font-size: 20px;
   cursor: pointer;
   border: solid 1px #fff;
@@ -34,7 +34,7 @@
 
 .CurrentPrice-more-button:hover {
   background-color: #fff;
-  color: #666;
+  color: #333;
 }
 
 .CurrentPrice-more-button:focus {
