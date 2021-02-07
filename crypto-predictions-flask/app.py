@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, jsonify
 from prices import Prices
 from flask_sqlalchemy import SQLAlchemy
-
+import json
  
 
 app = Flask(__name__)
@@ -27,10 +27,19 @@ def get_info():
         currency = request.args.get('currency')
         print("Currency: " + currency)
         coin = currency_info.query.filter_by(name=currency).first()
-        json_string = "{" + "name:"+coin.name +"," + "symbol:"+coin.symbol + "," + "description:"+coin.description + "," + "date_added:"+coin.date_added + "," + "website:"+coin.website + "}"
-        #currency_info = Prices(currency)
-        #return jsonify(currency_info.get_info())
-        return jsonify(json_string)
+
+        json_dict = {
+                "name": coin.name,
+                "symbol": coin.symbol,
+                "logo": "",
+                "description": coin.description,
+                "last_updated": "",
+                "date_added": coin.date_added,
+                "website": coin.website,
+                "technical_doc": ""
+        }
+
+        return json.dumps(json_dict)
 
 @app.route('/getprice')
 def get_price():
