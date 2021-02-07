@@ -4,7 +4,7 @@ import json
 
 class News:
     def __init__(self,currency):
-        self.url = "https://api.thenewsapi.com/v1/news/top?api_token=LbcHmUn9gxYNw513YxaXKFifpvILBx2xayLlpw90"
+        self.url = "https://api.thenewsapi.com/v1/news/top?api_token=LpTtsN2GClxm8DlQRAlt6Cjo38EKfOpZk8tsOiaY"
         self.session = Session()
         self.currency = currency
 
