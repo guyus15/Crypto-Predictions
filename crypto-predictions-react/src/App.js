@@ -67,7 +67,7 @@ class App extends React.Component {
             title="Test graph title"
             color="rgba(0,0,0,0)"
             borderColor="#FFF"
-            borderWidth={8}
+            borderWidth={3}
           />
           <div className="Databoxes">
             <DataBox title="Watchlist" type="watchlist"></DataBox>
