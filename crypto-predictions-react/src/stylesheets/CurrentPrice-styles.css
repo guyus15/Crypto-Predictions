@@ -5,12 +5,40 @@
   letter-spacing: 2px;
 }
 
+.CurrentPrice-name-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding:0 0 20px 10px;
+  width: 100%;
+}
+
 .CurrentPrice-name {
   font-style: normal;
   font-weight: bold;
   font-size: 20px;
   line-height: 25px;
-  padding:0 0 20px 10px;
+}
+
+.CurrentPrice-more-button {
+  font-family: 'Quicksand', sans-serif;  
+  background-color: #666;
+  font-size: 20px;
+  cursor: pointer;
+  border: solid 1px #fff;
+  color:#fff;
+  border-radius: 4px;
+  margin:0 20px 0 20px;
+}
+
+.CurrentPrice-more-button:hover {
+  background-color: #fff;
+  color: #666;
+}
+
+.CurrentPrice-more-button:focus {
+  outline: none;
 }
 
 .CurrentPrice-price {

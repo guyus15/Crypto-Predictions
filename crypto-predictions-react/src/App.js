@@ -59,7 +59,6 @@ class App extends React.Component {
       currencyName = `${this.state.currencyInfo.name} (${this.state.currencyInfo.symbol}) `;
     }
 
-
     return (
       <div className="App-container">
           <CurrentPrice name={currencyName} price={currencyPrice}></CurrentPrice>
