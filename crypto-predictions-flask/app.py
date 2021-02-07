@@ -84,12 +84,13 @@ def get_info():
 def get_price():
         currency = request.args.get('currency')
         values = bitcoin_prices.query.all()
+        print(values)
         json_dict = {
-            "last_updated": values.last_updated,
-            "price": values.price,
-            "percent_change_1h": values.percent_change_1h,
-            "values.percent_change_24h": values.percent_change_24h,
-            "values.percent_change_7d": values.percent_change_7d,
+            "last_updated": values[0].last_updated,
+            "price": values[0].price,
+            "percent_change_1h": values[0].percent_change_1h,
+            "values.percent_change_24h": values[0].percent_change_24h,
+            "values.percent_change_7d": values[0].percent_change_7d,
         }
         return json.dumps(json_dict)
         #print("Currency: " + currency)
