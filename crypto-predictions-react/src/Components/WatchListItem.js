@@ -10,11 +10,15 @@ class WatchListItem extends React.Component {
   }
   
   toggleActive() {
-    this.setState(prevState => {
-      return {
-        active: !prevState.active
-      }
-    })
+    const currentCurrency = document.querySelector('.CurrentPrice-name');
+    if(this.props.text !== currentCurrency.text){
+      this.setState(prevState => {
+        return {
+          active: !prevState.active
+        }
+      });
+      localStorage.setItem("currency", this.props.currency);
+    }
   }
 
   render () {
@@ -23,7 +27,7 @@ class WatchListItem extends React.Component {
       className += ' Databox-active';
     
     return (
-      <div className={className}>
+      <div className={className} onClick={this.toggleActive}>
         <p className="Databox-item-text">{this.props.text}</p>
       </div>
     )
