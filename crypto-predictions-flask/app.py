@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from prices import Prices
+from news import News
 import json
 from datetime import datetime, timedelta
 import time
@@ -11,6 +12,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///crypto_data.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SECRET_KEY"] = "SECRETKEY"
 db = SQLAlchemy(app)
+
 
 class currency_info(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -59,6 +61,14 @@ class bitcoin_prices(currency_prices, db.Model):
 class bitcoin_news(currency_news, db.Model):
     __tablename__ = "bitcoin_news"
     __mapper_args__ = {'polymorphic_identity': 'bitcoin_news'}
+    def __init__(self, uuid, last_updated, title, content, url, image_url, published):
+        self.uuid=uuid
+        self.last_updated=last_updated
+        self.title=title
+        self.content=content
+        self.url=url
+        self.image_url=image_url
+        self.published=published
 
 class ethereum_prices(currency_prices, db.Model):
     __tablename__ = "ethereum_prices"
@@ -100,6 +110,8 @@ class bitcoin_cash_news(currency_news, db.Model):
     __tablename__ = "bitcoin_cash_news"
     __mapper_args__ = {'polymorphic_identity': 'bitcoin_cash_news'}
 
+db_access_price = {"bitcoin":bitcoin_prices, "ethereum":ethereum_prices, "dogecoin":dogecoin_prices, "litecoin":litecoin_prices, "binance":binance_prices, "bitcoin_cash":bitcoin_cash_prices}
+db_access_news = {"bitcoin":bitcoin_news, "ethereum":ethereum_news, "dogecoin":dogecoin_news, "litecoin":litecoin_news, "binance":binance_news, "bitcoin_cash":bitcoin_cash_news}
 
 
 @app.route('/getinfo')
@@ -122,11 +134,11 @@ def get_info():
 @app.route('/getprice')
 def get_price():
         currency = request.args.get('currency')
-        values = bitcoin_prices.query.all()
+        values = db_access_price[currency].query.all()
         target_time=datetime.now()
         time_comparison = values[-1].last_updated
         time_formatted = datetime.strptime(time_comparison,"%Y-%m-%dT%H:%M:%S.%fZ")
-        if time_formatted+timedelta(minutes=5) > target_time:
+        if time_formatted+timedelta(minutes=1) > target_time:
             print("Time between calls too recent")
         else:
             currency = Prices(currency)
@@ -148,6 +160,20 @@ def get_price():
             json_dict.append(price_data)
         print(json_dict)
         return json.dumps(json_dict)
+
+@app.route('/getnews')
+def get_news():
+    currency = request.args.get('currency')
+    stories = db_access_news[currency].query.all()
+    target_time=datetime.now()
+    time_comparison = stories[-1].last_updated
+    time_formatted = datetime.strptime(time_comparison,"%Y-%m-%dT%H:%M:%S.%fZ")
+    if time_formatted+timedelta(minutes=1) > target_time:
+        print("Time between calls too recent")
+    else:
+        news = News(currency)
+        new_data = news.get_news()
+
 
 
 if __name__ == "__main__":
