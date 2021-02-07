@@ -1,9 +1,7 @@
 from flask import Flask, request, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from prices import Prices
-#from tables import currency_prices, currency_news
 import json
-
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///crypto_data.db"
