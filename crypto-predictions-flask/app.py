@@ -117,6 +117,7 @@ db_access_news = {"bitcoin":bitcoin_news, "ethereum":ethereum_news, "dogecoin":d
 @app.route('/getinfo')
 def get_info():
         currency = request.args.get('currency')
+        currency = currency.capitalize()
         print("Currency: " + currency)
         coin = currency_info.query.filter_by(name=currency).first()
         json_dict = {
@@ -166,14 +167,18 @@ def get_news():
     currency = request.args.get('currency')
     stories = db_access_news[currency].query.all()
     target_time=datetime.now()
-    time_comparison = stories[-1].last_updated
-    time_formatted = datetime.strptime(time_comparison,"%Y-%m-%dT%H:%M:%S.%fZ")
-    if time_formatted+timedelta(minutes=1) > target_time:
-        print("Time between calls too recent")
+    if len(stories) != 0:
+        time_comparison = stories[-1].last_updated
+        time_formatted = datetime.strptime(time_comparison,"%Y-%m-%dT%H:%M:%S.%fZ")
+        if time_formatted+timedelta(minutes=1) > target_time:
+            print("Time between calls too recent")
+        else:
+            news = News(currency)
+            new_data = news.get_news()
     else:
         news = News(currency)
         new_data = news.get_news()
-
+    return new_data
 
 
 if __name__ == "__main__":
