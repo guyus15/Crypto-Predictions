@@ -1,5 +1,6 @@
 import React from 'react'
 import Chart from 'chart.js'
+import '../stylesheets/Graph-styles.css'
 
 class Graph extends React.Component {
   constructor(props) {
@@ -8,10 +9,12 @@ class Graph extends React.Component {
   }
 
   componentDidMount() {
+    const myChartRef = this.chartRef.current.getContext("2d");
+
     let dataLabels = this.props.data.data.map(d => d.label);
     let dataValues = this.props.data.data.map(d => d.value);
 
-    this.myChart = new Chart(this.chartRef.current, {
+    this.myChart = new Chart(myChartRef, {
       type: 'line',
       color:'rgba(0,0,0,1)',
       options: {
@@ -23,17 +26,23 @@ class Graph extends React.Component {
         datasets: [{
           label: this.props.title,
           data: dataValues,
-          backgroundColor: this.props.color
+          backgroundColor: this.props.color,
+          borderColor: this.props.borderColor,
+          borderWidth: this.props.borderWidth,
+          lineTension: 0
         }]
       }
     });
-
-    this.chartRef.current.style = "width: 1870px; height: 340px";
   }
 
   render() {
     return (
-      <canvas className="Graph-canvas" ref={this.chartRef} />
+      <div className="Graph-container">
+        <canvas
+          id="myChart" 
+          ref={this.chartRef}
+        />
+      </div>
     )
   }
 }
