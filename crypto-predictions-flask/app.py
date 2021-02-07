@@ -2,6 +2,9 @@ from flask import Flask, request, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from prices import Prices
 import json
+from datetime import datetime, timedelta
+import time
+
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///crypto_data.db"
@@ -46,6 +49,12 @@ class currency_news(db.Model):
 class bitcoin_prices(currency_prices, db.Model):
     __tablename__ = "bitcoin_prices"
     __mapper_args__ = {'polymorphic_identity': 'bitcoin_prices'}
+    def __init__(self,last_updated,price,percent_change_1h,percent_change_24h,percent_change_7d):
+        self.last_updated=last_updated
+        self.price=price
+        self.percent_change_1h=percent_change_1h
+        self.percent_change_24h=percent_change_24h
+        self.percent_change_7d=percent_change_7d
 
 class bitcoin_news(currency_news, db.Model):
     __tablename__ = "bitcoin_news"
@@ -59,8 +68,38 @@ class ethereum_news(currency_news, db.Model):
     __tablename__ = "ethereum_news"
     __mapper_args__ = {'polymorphic_identity': 'ethereum_news'}
 
-db.create_all()
-db.session.commit()
+class dogecoin_prices(currency_prices, db.Model):
+    __tablename__ = "dogecoin_prices"
+    __mapper_args__ = {'polymorphic_identity': 'dogecoin_prices'}
+
+class dogecoin_news(currency_news, db.Model):
+    __tablename__ = "dogecoin_news"
+    __mapper_args__ = {'polymorphic_identity': 'dogecoin_news'}
+
+class litecoin_prices(currency_prices, db.Model):
+    __tablename__ = "litecoin_prices"
+    __mapper_args__ = {'polymorphic_identity': 'litecoin_prices'}
+
+class litecoin_news(currency_news, db.Model):
+    __tablename__ = "litecoin_news"
+    __mapper_args__ = {'polymorphic_identity': 'litecoin_news'}
+
+class binance_prices(currency_prices, db.Model):
+    __tablename__ = "binance_prices"
+    __mapper_args__ = {'polymorphic_identity': 'binance_prices'}
+
+class binance_news(currency_news, db.Model):
+    __tablename__ = "binance_news"
+    __mapper_args__ = {'polymorphic_identity': 'binance_news'}
+
+class bitcoin_cash_prices(currency_prices, db.Model):
+    __tablename__ = "bitcoin_cash_prices"
+    __mapper_args__ = {'polymorphic_identity': 'bitcoin_cash_prices'}
+
+class bitcoin_cash_news(currency_news, db.Model):
+    __tablename__ = "bitcoin_cash_news"
+    __mapper_args__ = {'polymorphic_identity': 'bitcoin_cash_news'}
+
 
 
 @app.route('/getinfo')
@@ -84,18 +123,28 @@ def get_info():
 def get_price():
         currency = request.args.get('currency')
         values = bitcoin_prices.query.all()
-        print(values)
-        json_dict = {
-            "last_updated": values[0].last_updated,
-            "price": values[0].price,
-            "percent_change_1h": values[0].percent_change_1h,
-            "values.percent_change_24h": values[0].percent_change_24h,
-            "values.percent_change_7d": values[0].percent_change_7d,
-        }
+        target_time=datetime.now()
+        time_comparison = values[-1].last_updated
+        time_formatted = datetime.strptime(time_comparison,"%Y-%m-%dT%H:%M:%S.%fZ")
+        if time_formatted+timedelta(minutes=5) > target_time:
+            print("Time between calls too recent")
+        else:
+            currency = Prices(currency)
+            new_data = currency.get_price()
+            new_record = bitcoin_prices(new_data[0].get("last_updated"), new_data[0].get("quote").get("GBP").get("price"), new_data[0].get("quote").get("GBP").get("percent_change_1h"), new_data[0].get("quote").get("GBP").get("percent_change_24h"), new_data[0].get("quote").get("GBP").get("percent_change_7d"))
+            db.session.add(new_record)
+            db.session.commit()
+        values = bitcoin_prices.query.all()
+        json_dict = {}
+        for i in range(len(values)):
+            print(values[i].last_updated)
+            json_dict["last_updated"] = values[i].last_updated
+            json_dict["price"] = values[i].price
+            json_dict["percent_change_1h"] = values[i].percent_change_1h
+            json_dict["values.percent_change_24h"] = values[i].percent_change_24h
+            json_dict["values.percent_change_7d"] = values[i].percent_change_7d  
         return json.dumps(json_dict)
-        #print("Currency: " + currency)
-        #current_price = Prices(currency)
-        #return jsonify(current_price.get_price())
+
 
 if __name__ == "__main__":
   app.run()
