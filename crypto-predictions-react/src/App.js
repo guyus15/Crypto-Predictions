@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import DataBox from './Components/DataBox';
@@ -34,11 +34,13 @@ class App extends React.Component {
     this.state = {
       currencyInfo: undefined,
       currencyPrice: [{"last_updated":"","price":"","percentage_change_1h":"","percent_change_24h":"", "percentage_change_7d":""}],
-      currencyNews: [{"content":"","image_url":"","last_updated":"","published_at":"","title":"","url":"","uuid":""}]
+      currencyNews: [{"content":"","image_url":"","last_updated":"","published_at":"","title":"","url":"","uuid":""}],
+      time: Date.now()
     } 
 
     this.getInfo = this.getInfo.bind(this);
     this.getPrice = this.getPrice.bind(this);
+    this.getGraph = this.getGraph.bind(this);
     this.updateCurrency = this.updateCurrency.bind(this);
   }
 
@@ -84,6 +86,18 @@ class App extends React.Component {
     this.updateCurrency();
   }
 
+  getGraph(priceData, currencyName) {
+    return (
+      <Graph
+        data={priceData}
+        title={currencyName}
+        color="rgba(0,0,0,0)"
+        borderColor="#FFF"
+        borderWidth={3}
+      />            
+    )
+  }
+
   render() {
     
     let priceData = this.state.currencyPrice;
@@ -107,13 +121,7 @@ class App extends React.Component {
     return (
       <div className="App-container">
           <CurrentPrice name={currencyName} price={currencyPrice}></CurrentPrice>
-          <Graph
-            data={priceData}
-            title={currencyName}
-            color="rgba(0,0,0,0)"
-            borderColor="#FFF"
-            borderWidth={3}
-          />
+          {this.getGraph(priceData,currencyName)}
           <div className="Databoxes">
             <DataBox 
               title="Watchlist"

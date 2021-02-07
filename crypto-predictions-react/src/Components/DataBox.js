@@ -7,7 +7,21 @@ class DataBox extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      toggle: false
+    }
+
     this.updateDatabox = this.updateDatabox.bind(this);
+    this.resetWatchlistActive = this.resetWatchlistActive.bind(this);
+  }
+
+  resetWatchlistActive() 
+  {
+    this.setState(prevState => {
+      return {
+        toggle: !prevState.toggle
+      }
+    })
   }
 
   updateDatabox () {
@@ -29,12 +43,12 @@ class DataBox extends React.Component {
         
           {this.props.type === "watchlist" ? (
             <div className={className} onClick={this.updateDatabox}>
-              <WatchListItem text="Bitcoin (BTC)" currency="bitcoin" updateDatabox={this.updateDatabox}></WatchListItem>
-              <WatchListItem text="Ethereum (ETH)" currency="ethereum" updateDatabox={this.updateDatabox}></WatchListItem>
-              <WatchListItem text="Litecoin (LTC)" currency="litecoin" updateDatabox={this.updateDatabox}></WatchListItem>
-              <WatchListItem text="Dogecoin (DOGE)" currency="dogecoin" updateDatabox={this.updateDatabox}></WatchListItem>
-              <WatchListItem text="Binance Coin (BNB)" currency="binance" updateDatabox={this.updateDatabox}></WatchListItem>
-              <WatchListItem text="Bitcoin Cash (BCH)" currency="bitcoin_cash" updateDatabox={this.updateDatabox}></WatchListItem>
+              <WatchListItem text="Bitcoin (BTC)" currency="bitcoin" updateDatabox={this.updateDatabox} reset={this.resetWatchlistActive}></WatchListItem>
+              <WatchListItem text="Ethereum (ETH)" currency="ethereum" updateDatabox={this.updateDatabox} reset={this.resetWatchlistActive}></WatchListItem>
+              <WatchListItem text="Litecoin (LTC)" currency="litecoin" updateDatabox={this.updateDatabox} reset={this.resetWatchlistActive}></WatchListItem>
+              <WatchListItem text="Dogecoin (DOGE)" currency="dogecoin" updateDatabox={this.updateDatabox} reset={this.resetWatchlistActive}></WatchListItem>
+              <WatchListItem text="Binance Coin (BNB)" currency="binance" updateDatabox={this.updateDatabox} reset={this.resetWatchlistActive}></WatchListItem>
+              <WatchListItem text="Bitcoin Cash (BCH)" currency="bitcoin_cash" updateDatabox={this.updateDatabox} reset={this.resetWatchlistActive}></WatchListItem>
             </div>
             ) : this.props.type === "information" ? (
             <div className={className}>

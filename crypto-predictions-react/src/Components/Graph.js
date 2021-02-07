@@ -6,9 +6,15 @@ class Graph extends React.Component {
   constructor(props) {
     super(props);
     this.chartRef = React.createRef();
+
+    this.state = {
+      time: Date.now()
+    }
   }
 
   componentDidMount() {
+    this.interval = setInterval(() => this.setState({time: Date.now() }), 1000);
+
     const myChartRef = this.chartRef.current.getContext("2d");
 
     let dataLabels = this.props.data.map(d => d.last_updated.substr(0,10));
@@ -33,6 +39,10 @@ class Graph extends React.Component {
         }]
       }
     });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   render() {
