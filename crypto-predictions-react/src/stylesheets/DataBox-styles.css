@@ -76,12 +76,12 @@
   font-size: 20px;
   line-height: 25px;
   color:#fff;
-  background-color: #666;
+  background-color: #333;
 }
 
 .Databox-active {
   background-color: #fff;
-  color: #666;
+  color: #333;
 }
 
 .Databox-list-item {
