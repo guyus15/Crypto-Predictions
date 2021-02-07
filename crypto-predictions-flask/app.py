@@ -1,9 +1,7 @@
 from flask import Flask, request, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from prices import Prices
-#from tables import currency_prices, currency_news
 import json
-
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///crypto_data.db"
@@ -85,9 +83,18 @@ def get_info():
 @app.route('/getprice')
 def get_price():
         currency = request.args.get('currency')
-        print("Currency: " + currency)
-        current_price = Prices(currency)
-        return jsonify(current_price.get_price())
+        values = bitcoin_prices.query.all()
+        json_dict = {
+            "last_updated": values.last_updated,
+            "price": values.price,
+            "percent_change_1h": values.percent_change_1h,
+            "values.percent_change_24h": values.percent_change_24h,
+            "values.percent_change_7d": values.percent_change_7d,
+        }
+        return json.dumps(json_dict)
+        #print("Currency: " + currency)
+        #current_price = Prices(currency)
+        #return jsonify(current_price.get_price())
 
 if __name__ == "__main__":
   app.run()

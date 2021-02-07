@@ -62,6 +62,4 @@ class Prices:
 
 if __name__ == "__main__":
     bitcoin = Prices("bitcoin")
-    bitcoin.get_price()
-    time.sleep(5)
-    bitcoin.get_price()
+    print(bitcoin.get_price())
