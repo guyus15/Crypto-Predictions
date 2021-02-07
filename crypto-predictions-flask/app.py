@@ -188,7 +188,12 @@ def get_info():
         currency = request.args.get('currency')
         currency = currency.capitalize()
         print("Currency: " + currency)
-        coin = currency_info.query.filter_by(name=currency).first()
+        if currency == "binance":
+            coin = currency_info.query.filter_by(name="Binance Coin").first()
+        elif currency == "bitcoin_cash":
+            coin = currency_info.query.filter_by(name="Bitcoin Cash").first()
+        else:
+            coin = currency_info.query.filter_by(name=currency).first()
         json_dict = {
                 "name": coin.name,
                 "symbol": coin.symbol,
