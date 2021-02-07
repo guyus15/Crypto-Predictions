@@ -28,6 +28,10 @@ class DataBox extends React.Component {
               <WatchListItem text="Test Text"></WatchListItem>
               <WatchListItem text="Test Text"></WatchListItem>
             </div>
+            ) : this.props.type === "information" ? (
+            <div className={className}>
+              <p>This is an information box</p>
+            </div>
             ) : (
             <div className={className}>
               <NewsItem text="Text text" date="02/02/2021"></NewsItem>
@@ -35,7 +39,7 @@ class DataBox extends React.Component {
               <NewsItem text="Text text" date="02/02/2021"></NewsItem>
               <NewsItem text="Text text" date="02/02/2021"></NewsItem>
             </div>
-          )}
+            )}
       </div>
     )
   }

@@ -32,11 +32,12 @@ class App extends React.Component {
     super();
 
     this.state = {
-      currencyInfo: this.getInfo()
+      currencyInfo: undefined,
+      currencyPrice: undefined
     } 
 
     this.getInfo = this.getInfo.bind(this);
-    //this.getPrice = this.getPrice.bind(this);
+    this.getPrice = this.getPrice.bind(this);
   }
 
   
@@ -49,14 +50,29 @@ class App extends React.Component {
       });
   }
 
-  render() {
-    console.log(this.state.currencyInfo);
+  getPrice() {
+    let currency = 'Bitcoin';
+    fetch(`/getprice?currency=${currency}`)
+      .then(res => res.json())
+      .then(data => {
+        this.setState({currencyPrice: data})
+      });
+  }
 
-    let currencyName = "Test currency"
-    let currencyPrice = "27500" 
+  componentDidMount() {
+    this.getInfo();
+    this.getPrice();
+  }
+
+  render() {
     
-    if (this.state.currencyInfo !== undefined) {
-      currencyName = `${this.state.currencyInfo.name} (${this.state.currencyInfo.symbol}) `;
+  
+    let currencyName = "Currency (CUR)"
+    let currencyPrice = "27500"
+    
+    if (this.state.currencyInfo !== undefined && this.state.currencyPrice !== undefined) {
+      currencyName = `${this.state.currencyInfo.name} (${this.state.currencyInfo.symbol})`;
+      currencyPrice = `${this.state.currencyPrice.price}`;
     }
 
     return (
@@ -71,6 +87,7 @@ class App extends React.Component {
           />
           <div className="Databoxes">
             <DataBox title="Watchlist" type="watchlist"></DataBox>
+            <DataBox title="Information" type="information"></DataBox>
             <DataBox title="Trending Stories" type="news"></DataBox>
           </div>
       </div>
