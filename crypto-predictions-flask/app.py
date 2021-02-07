@@ -144,10 +144,10 @@ def get_price():
         else:
             currency = Prices(currency)
             new_data = currency.get_price()
-            new_record = bitcoin_prices(new_data[0].get("last_updated"), new_data[0].get("quote").get("GBP").get("price"), new_data[0].get("quote").get("GBP").get("percent_change_1h"), new_data[0].get("quote").get("GBP").get("percent_change_24h"), new_data[0].get("quote").get("GBP").get("percent_change_7d"))
+            new_record = db_access_price[currency](new_data[0].get("last_updated"), new_data[0].get("quote").get("GBP").get("price"), new_data[0].get("quote").get("GBP").get("percent_change_1h"), new_data[0].get("quote").get("GBP").get("percent_change_24h"), new_data[0].get("quote").get("GBP").get("percent_change_7d"))
             db.session.add(new_record)
             db.session.commit()
-        values = bitcoin_prices.query.all()
+        values = db_access_price[currency].query.all()
         json_dict = []
         last_updated, price, percent_change_1h, percent_change_24h, percent_change_7d = [], [], [], [], []
         for i in range(len(values)):
@@ -159,7 +159,6 @@ def get_price():
         for a, b, c, d, e in zip(last_updated, price, percent_change_1h, percent_change_24h, percent_change_7d):
             price_data = {"last_updated":a, "price":b, "percent_change_1h":c, "percent_change_24h":d, "percent_change_7d":e}
             json_dict.append(price_data)
-        print(json_dict)
         return json.dumps(json_dict)
 
 @app.route('/getnews')
@@ -169,16 +168,43 @@ def get_news():
     target_time=datetime.now()
     if len(stories) != 0:
         time_comparison = stories[-1].last_updated
-        time_formatted = datetime.strptime(time_comparison,"%Y-%m-%dT%H:%M:%S.%fZ")
+        time_formatted = datetime.strptime(time_comparison,"%Y-%m-%d %H:%M:%S.%f")
         if time_formatted+timedelta(minutes=1) > target_time:
             print("Time between calls too recent")
         else:
             news = News(currency)
             new_data = news.get_news()
+            for i in range(len(new_data[0])):
+                temp_story = db_access_news[currency].query.filter_by(uuid=new_data[0][i].get("uuid")).first()
+                if temp_story == None:
+                    new_record = db_access_news[currency](new_data[0][i].get("uuid"), datetime.now(), new_data[0][i].get("title"), new_data[0][i].get("snippet"), new_data[0][i].get("url"), new_data[0][i].get("image_url"), new_data[0][i].get("published_at"))
+                    db.session.add(new_record)
+            db.session.commit()
     else:
         news = News(currency)
         new_data = news.get_news()
-    return new_data
+        for i in range(len(new_data)):
+            temp_story = db_access_news[currency].query.filter_by(uuid=new_data[0][i].get("uuid")).first()
+            if temp_story == None:
+                new_record = db_access_news[currency](new_data[0][i].get("uuid"), datetime.now(), new_data[0][i].get("title"), new_data[0][i].get("snippet"), new_data[0][i].get("url"), new_data[0][i].get("image_url"), new_data[0][i].get("published_at"))
+                db.session.add(new_record)
+        db.session.commit()
+    stories = db_access_news[currency].query.all()
+    json_dict = []
+    uuid, last_updated, title, content, url, image_url, published_at = [], [], [], [], [], [], []
+    for i in range(len(stories)):
+        uuid.append(stories[i].uuid)
+        last_updated.append(stories[i].last_updated)
+        title.append(stories[i].title)
+        content.append(stories[i].content)
+        url.append(stories[i].url)
+        image_url.append(stories[i].image_url)
+        published_at.append(stories[i].published)
+    for a, b, c, d, e, f, g in zip(uuid, last_updated, title, content, url, image_url, published_at):
+        news_data = {"uuid":a, "last_updated":b, "title":c, "content":d, "url":e, "image_url":f,"published_at":g}
+        json_dict.append(news_data)
+    return json.dumps(json_dict)
+
 
 
 if __name__ == "__main__":
