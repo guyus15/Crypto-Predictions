@@ -43,7 +43,7 @@ class DataBox extends React.Component {
             </div>
             ) : (
             <div className={className}>
-              {/*this.props.newsData.map(article => <NewsItem text={article.title} date={article.published_at.substr(0,10)}></NewsItem>)*/}
+              {this.props.newsData.map(article => <NewsItem text={article.title} date={article.published_at.substr(0,10)}></NewsItem>)}
 
             </div>
             )}
