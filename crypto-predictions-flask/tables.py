@@ -1,6 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
 
-
 class currency_prices(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     last_updated = db.Column(db.String(20))
@@ -12,6 +11,10 @@ class currency_prices(db.Model):
 
 class currency_news(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    uuid = db.Column(db.String(40))
     last_updated = db.Column(db.String(20))
     title = db.Column(db.String(30))
     content = db.Column(db.String(2000))
+    url = db.Column(db.String(150))
+    image_url = db.Column(db.String(150))
+    published = db.Column(db.String(20))
