@@ -188,9 +188,9 @@ def get_info():
         currency = request.args.get('currency')
         currency = currency.capitalize()
         print("Currency: " + currency)
-        if currency == "binance":
+        if currency == "Binance":
             coin = currency_info.query.filter_by(name="Binance Coin").first()
-        elif currency == "bitcoin_cash":
+        elif currency == "Bitcoin_cash":
             coin = currency_info.query.filter_by(name="Bitcoin Cash").first()
         else:
             coin = currency_info.query.filter_by(name=currency).first()
