@@ -135,14 +135,18 @@ def get_price():
             db.session.add(new_record)
             db.session.commit()
         values = bitcoin_prices.query.all()
-        json_dict = {}
+        json_dict = []
+        last_updated, price, percent_change_1h, percent_change_24h, percent_change_7d = [], [], [], [], []
         for i in range(len(values)):
-            print(values[i].last_updated)
-            json_dict["last_updated"] = values[i].last_updated
-            json_dict["price"] = values[i].price
-            json_dict["percent_change_1h"] = values[i].percent_change_1h
-            json_dict["values.percent_change_24h"] = values[i].percent_change_24h
-            json_dict["values.percent_change_7d"] = values[i].percent_change_7d  
+            last_updated.append(values[i].last_updated)
+            price.append(values[i].price)
+            percent_change_1h.append(values[i].percent_change_1h)
+            percent_change_24h.append(values[i].percent_change_24h)
+            percent_change_7d.append(values[i].percent_change_7d)
+        for a, b, c, d, e in zip(last_updated, price, percent_change_1h, percent_change_24h, percent_change_7d):
+            price_data = {"last_updated":a, "price":b, "percent_change_1h":c, "percent_change_24h":d, "percent_change_7d":e}
+            json_dict.append(price_data)
+        print(json_dict)
         return json.dumps(json_dict)
 
 
