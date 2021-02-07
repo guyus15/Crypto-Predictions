@@ -28,7 +28,7 @@ class WatchListItem extends React.Component {
     
     return (
       <div className={className} onClick={this.toggleActive}>
-        <p className="Databox-item-text">{this.props.text}</p>
+        <p className="Databox-watchlist-text">{this.props.text}</p>
       </div>
     )
   }
