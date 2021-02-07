@@ -33,7 +33,7 @@ class App extends React.Component {
 
     this.state = {
       currencyInfo: undefined,
-      currencyPrice: undefined,
+      currencyPrice: [{"last_updated":"","price":"","percentage_change_1h":"","percent_change_24h":"", "percentage_change_7d":""}],
       currencyNews: [{"content":"","image_url":"","last_updated":"","published_at":"","title":"","url":"","uuid":""}]
     } 
 
@@ -86,7 +86,7 @@ class App extends React.Component {
 
   render() {
     
-  
+    let priceData = this.state.currencyPrice;
     let currencyName = "Currency"
     let currencyPrice = "27500"
     let currencyDesc = ""
@@ -95,7 +95,6 @@ class App extends React.Component {
     
     if (this.state.currencyInfo !== undefined && this.state.currencyPrice !== undefined) {
       currencyName = `${this.state.currencyInfo.name} (${this.state.currencyInfo.symbol})`;
-      let priceData = this.state.currencyPrice;
       currencyPrice = priceData[priceData.length - 1].price;
       currencyDesc = this.state.currencyInfo.description;
       currencyDateCreated = this.state.currencyInfo.date_added;
@@ -103,14 +102,13 @@ class App extends React.Component {
 
     if (this.state.currencyNews !== undefined) {
       currentNewsData = this.state.currencyNews;
-      console.log(currentNewsData);
     }
 
     return (
       <div className="App-container">
           <CurrentPrice name={currencyName} price={currencyPrice}></CurrentPrice>
           <Graph
-            data={categoricalData}
+            data={priceData}
             title={currencyName}
             color="rgba(0,0,0,0)"
             borderColor="#FFF"
