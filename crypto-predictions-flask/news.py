@@ -1,5 +1,6 @@
 from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
+import json
 
 class News:
     def __init__(self,currency):
@@ -16,8 +17,12 @@ class News:
             "exclude_categories":"sport, entertainment, food, travel"
         }
         response = self.session.get(self.url, params=parameters)
-        #data = json.loads(response.text)
-        print(response.text)
+        simplified_data = []
+        data = json.loads(response.text)
+        for i in data:
+            if i == "data":
+                simplified_data.append(data[i])
+        return simplified_data
 
 
 
