@@ -1,10 +1,15 @@
 # Crypto-Predictions
 Our entry for the Royal Hackaway 2021 event.
 
-The Crypto-Predictions app is designed to watch prices of currencies and track related news stories to help users identify the stories and topics that most affect the currency they are invested in. From this, they can try to make predictions about good investments relating to the latest news stories, so they can try to make good investments.
+## What the project is?
+The project is designed to track trending news stories and twitter posts and marks them against the prices to look for huge jumps or drops in price. 6 currencies can be selected from the watch list and it will show related stories and tweets.
+
+## Our Motivation
+After watching the explosion of stocks such as Gamestop and Dogecoin, thanks to r/wallstreetbets and Elon Musk, we wanted to build something that could collate this data and analyse patterns between what is being said and the impact on the price.
 
 
-## How to run
+
+## How to run?
 * Activate virtual environment for flask server
   * Windows = .\crypto-predictions-flask\venv\Scripts\activate.bat
   * Mac & Linux = Source .\crypto-predictions-flask\venv\Scripts\activate

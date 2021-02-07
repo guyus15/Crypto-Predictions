@@ -33,8 +33,8 @@ class App extends React.Component {
 
     this.state = {
       currencyInfo: undefined,
-      currencyPrice: undefined,
-      currencyNews: undefined
+      currencyPrice: [{"last_updated":"","price":"","percentage_change_1h":"","percent_change_24h":"", "percentage_change_7d":""}],
+      currencyNews: [{"content":"","image_url":"","last_updated":"","published_at":"","title":"","url":"","uuid":""}]
     } 
 
     this.getInfo = this.getInfo.bind(this);
@@ -68,13 +68,12 @@ class App extends React.Component {
   }
 
   updateCurrency() {
-    let currentCurrency = localStorage.getItem('currency'); 
-
-    if (currentCurrency === null)
+    if (localStorage.getItem('currency') === null)
     {
-      localStorage.setItem('currency', 'ethereum');
+      localStorage.setItem('currency', 'bitcoin');
     }
-    currentCurrency = localStorage.getItem('currency'); 
+
+    let currentCurrency = localStorage.getItem('currency'); 
 
     this.getInfo(currentCurrency);
     this.getPrice(currentCurrency);
@@ -87,8 +86,8 @@ class App extends React.Component {
 
   render() {
     
-  
-    let currencyName = "Currency (CUR)"
+    let priceData = this.state.currencyPrice;
+    let currencyName = "Currency"
     let currencyPrice = "27500"
     let currencyDesc = ""
     let currencyDateCreated = ""
@@ -96,7 +95,6 @@ class App extends React.Component {
     
     if (this.state.currencyInfo !== undefined && this.state.currencyPrice !== undefined) {
       currencyName = `${this.state.currencyInfo.name} (${this.state.currencyInfo.symbol})`;
-      let priceData = this.state.currencyPrice;
       currencyPrice = priceData[priceData.length - 1].price;
       currencyDesc = this.state.currencyInfo.description;
       currencyDateCreated = this.state.currencyInfo.date_added;
@@ -110,7 +108,7 @@ class App extends React.Component {
       <div className="App-container">
           <CurrentPrice name={currencyName} price={currencyPrice}></CurrentPrice>
           <Graph
-            data={categoricalData}
+            data={priceData}
             title={currencyName}
             color="rgba(0,0,0,0)"
             borderColor="#FFF"

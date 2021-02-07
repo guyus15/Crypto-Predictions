@@ -7,7 +7,6 @@ class CurrentPrice extends React.Component {
       <div className="CurrentPrice-container">
         <div className="CurrentPrice-name-container">
           <p className="CurrentPrice-name">{this.props.name}</p>
-          <button className="CurrentPrice-more-button">More</button>
         </div>
         <p className="CurrentPrice-price">£{this.props.price}</p>
         <p className="CurrentPrice-text">Current Price</p>

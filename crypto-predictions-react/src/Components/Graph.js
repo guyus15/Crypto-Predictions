@@ -11,8 +11,8 @@ class Graph extends React.Component {
   componentDidMount() {
     const myChartRef = this.chartRef.current.getContext("2d");
 
-    let dataLabels = this.props.data.data.map(d => d.label);
-    let dataValues = this.props.data.data.map(d => d.value);
+    let dataLabels = this.props.data.map(d => d.last_updated.substr(0,10));
+    let dataValues = this.props.data.map(d => d.price);
 
     this.myChart = new Chart(myChartRef, {
       type: 'line',
