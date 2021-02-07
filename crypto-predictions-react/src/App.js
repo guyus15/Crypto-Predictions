@@ -34,7 +34,7 @@ class App extends React.Component {
     this.state = {
       currencyInfo: undefined,
       currencyPrice: undefined,
-      currencyNews: undefined
+      currencyNews: [{"content":"","image_url":"","last_updated":"","published_at":"","title":"","url":"","uuid":""}]
     } 
 
     this.getInfo = this.getInfo.bind(this);
@@ -68,13 +68,12 @@ class App extends React.Component {
   }
 
   updateCurrency() {
-    let currentCurrency = localStorage.getItem('currency'); 
-
-    if (currentCurrency === null)
+    if (localStorage.getItem('currency') === null)
     {
-      localStorage.setItem('currency', 'ethereum');
+      localStorage.setItem('currency', 'bitcoin');
     }
-    currentCurrency = localStorage.getItem('currency'); 
+
+    let currentCurrency = localStorage.getItem('currency'); 
 
     this.getInfo(currentCurrency);
     this.getPrice(currentCurrency);
@@ -88,7 +87,7 @@ class App extends React.Component {
   render() {
     
   
-    let currencyName = "Currency (CUR)"
+    let currencyName = "Currency"
     let currencyPrice = "27500"
     let currencyDesc = ""
     let currencyDateCreated = ""
@@ -104,6 +103,7 @@ class App extends React.Component {
 
     if (this.state.currencyNews !== undefined) {
       currentNewsData = this.state.currencyNews;
+      console.log(currentNewsData);
     }
 
     return (
