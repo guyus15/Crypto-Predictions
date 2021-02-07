@@ -8,8 +8,6 @@ class Graph extends React.Component {
   }
 
   componentDidMount() {
-
-    console.log(this.props.data.data);
     let dataLabels = this.props.data.data.map(d => d.label);
     let dataValues = this.props.data.data.map(d => d.value);
 
