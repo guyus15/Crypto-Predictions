@@ -54,12 +54,14 @@ class Prices:
         url = self.url + "/listings/latest"
         parameters = {
             'convert':'GBP',
-            'limit':'1'
+            'limit':'13',
         }
         data = self.fetch(url,parameters)
-        return data
+        for i in data:
+            if i.get("name") == self.currency:
+                return i
 
 
 if __name__ == "__main__":
-    bitcoin = Prices("bitcoin")
+    bitcoin = Prices("Bitcoin Cash")
     print(bitcoin.get_price())
