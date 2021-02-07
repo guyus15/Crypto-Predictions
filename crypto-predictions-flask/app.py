@@ -217,7 +217,7 @@ def get_price():
                 elif currency == "bitcoin_cash":
                     price = Prices("Bitcoin Cash")
                 else:
-                    price = Prices(currency)
+                    price = Prices(currency.capitalize())
                 new_data = price.get_price()
                 new_record = db_access_price[currency](new_data.get("last_updated"), new_data.get("quote").get("GBP").get("price"), new_data.get("quote").get("GBP").get("percent_change_1h"), new_data.get("quote").get("GBP").get("percent_change_24h"), new_data.get("quote").get("GBP").get("percent_change_7d"))
                 db.session.add(new_record)
@@ -228,7 +228,7 @@ def get_price():
             elif currency == "bitcoin_cash":
                 price = Prices("Bitcoin Cash")
             else:
-                price = Prices(currency)
+                price = Prices(currency.capitalize())
             new_data = price.get_price()
             new_record = db_access_price[currency](new_data.get("last_updated"), new_data.get("quote").get("GBP").get("price"), new_data.get("quote").get("GBP").get("percent_change_1h"), new_data.get("quote").get("GBP").get("percent_change_24h"), new_data.get("quote").get("GBP").get("percent_change_7d"))
             db.session.add(new_record)
