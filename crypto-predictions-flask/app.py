@@ -212,14 +212,14 @@ def get_price():
             if time_formatted+timedelta(minutes=1) > target_time:
                 print("Time between calls too recent")
             else:
-                currency = Prices(currency)
-                new_data = currency.get_price()
+                price = Prices(currency)
+                new_data = price.get_price()
                 new_record = db_access_price[currency](new_data[0].get("last_updated"), new_data[0].get("quote").get("GBP").get("price"), new_data[0].get("quote").get("GBP").get("percent_change_1h"), new_data[0].get("quote").get("GBP").get("percent_change_24h"), new_data[0].get("quote").get("GBP").get("percent_change_7d"))
                 db.session.add(new_record)
                 db.session.commit()
         else:
-            currency = Prices(currency)
-            new_data = currency.get_price()
+            price = Prices(currency)
+            new_data = price.get_price()
             new_record = db_access_price[currency](new_data[0].get("last_updated"), new_data[0].get("quote").get("GBP").get("price"), new_data[0].get("quote").get("GBP").get("percent_change_1h"), new_data[0].get("quote").get("GBP").get("percent_change_24h"), new_data[0].get("quote").get("GBP").get("percent_change_7d"))
             db.session.add(new_record)
             db.session.commit()
