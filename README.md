@@ -7,7 +7,10 @@ The project is designed to track trending news stories and twitter posts and mar
 ## Our Motivation
 After watching the explosion of stocks such as Gamestop and Dogecoin, thanks to r/wallstreetbets and Elon Musk, we wanted to build something that could collate this data and analyse patterns between what is being said and the impact on the price.
 
+![elon must tweet](README/Screenshot_3.png)
+![dogecoin graph](README/Screenshot_4.png)
 
+The photo of the graph is from a few hours after Elon Musk tweeted this poll showing the huge effect his tweets can have on the currency. 
 
 ## How to run?
 * Activate virtual environment for flask server
