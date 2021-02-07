@@ -34,7 +34,7 @@ class App extends React.Component {
     this.state = {
       currencyInfo: undefined,
       currencyPrice: undefined,
-      currency: 'bitcoin'
+      currencyNews: undefined
     } 
 
     this.getInfo = this.getInfo.bind(this);
@@ -59,6 +59,14 @@ class App extends React.Component {
       });
   }
 
+  getNews(currency) {
+    fetch(`/getnews?currency=${currency}`)
+      .then(res => res.json())
+      .then(data => {
+        this.setState({currencyNews: data})
+      });
+  }
+
   updateCurrency() {
     let currentCurrency = localStorage.getItem('currency'); 
 
@@ -70,6 +78,7 @@ class App extends React.Component {
 
     this.getInfo(currentCurrency);
     this.getPrice(currentCurrency);
+    this.getNews(currentCurrency);
   }
 
   componentDidMount() {
@@ -81,11 +90,20 @@ class App extends React.Component {
   
     let currencyName = "Currency (CUR)"
     let currencyPrice = "27500"
+    let currencyDesc = ""
+    let currencyDateCreated = ""
+    let currentNewsData = ""
     
     if (this.state.currencyInfo !== undefined && this.state.currencyPrice !== undefined) {
       currencyName = `${this.state.currencyInfo.name} (${this.state.currencyInfo.symbol})`;
       let priceData = this.state.currencyPrice;
       currencyPrice = priceData[priceData.length - 1].price;
+      currencyDesc = this.state.currencyInfo.description;
+      currencyDateCreated = this.state.currencyInfo.date_added;
+    }
+
+    if (this.state.currencyNews !== undefined) {
+      currentNewsData = this.state.currencyNews;
     }
 
     return (
@@ -99,9 +117,23 @@ class App extends React.Component {
             borderWidth={3}
           />
           <div className="Databoxes">
-            <DataBox title="Watchlist" type="watchlist" updateCurrency={this.updateCurrency}></DataBox>
-            <DataBox title="Information" type="information" updateCurrency={this.updateCurrency}></DataBox>
-            <DataBox title="Trending Stories" type="news" updateCurrency={this.updateCurrency}></DataBox>
+            <DataBox 
+              title="Watchlist"
+              type="watchlist"
+              updateCurrency={this.updateCurrency}
+            ></DataBox>
+            <DataBox title="Information"
+              type="information"
+              updateCurrency={this.updateCurrency}
+              description={currencyDesc}
+              dateAdded={"Date Added: " + currencyDateCreated}
+            ></DataBox>
+            <DataBox
+              title="Trending Stories"
+              type="news"
+              updateCurrency={this.updateCurrency}
+              newsData={currentNewsData}
+            ></DataBox>
           </div>
       </div>
     )

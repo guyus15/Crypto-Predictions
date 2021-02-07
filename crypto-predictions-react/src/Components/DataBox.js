@@ -18,6 +18,8 @@ class DataBox extends React.Component {
     let className = "Databox";
     if (this.props.type === "watchlist")
       className += " Databox-watchlist";
+    else if (this.props.type === "information")
+      className += " Databox-information"
     else 
       className += " Databox-list"
 
@@ -36,14 +38,13 @@ class DataBox extends React.Component {
             </div>
             ) : this.props.type === "information" ? (
             <div className={className}>
-              <p>This is an information box</p>
+              <p className="Databox-info-desc">{this.props.description}</p>
+              <p className="Databox-info-date">{this.props.dateAdded.substr(0, 22)}</p>
             </div>
             ) : (
             <div className={className}>
-              <NewsItem text="Text text" date="02/02/2021"></NewsItem>
-              <NewsItem text="Text text" date="02/02/2021"></NewsItem>
-              <NewsItem text="Text text" date="02/02/2021"></NewsItem>
-              <NewsItem text="Text text" date="02/02/2021"></NewsItem>
+              {this.props.newsData.map(article => <NewsItem text={article.title} date={article.published_at.substr(0,10)}></NewsItem>)}
+
             </div>
             )}
       </div>

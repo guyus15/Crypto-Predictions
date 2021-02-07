@@ -38,6 +38,8 @@
 .Databox-list {
   overflow-x: hidden;
   overflow-y: scroll;
+  scrollbar-width: 5px;
+  scrollbar-color: #ddd none;
 }
 
 /* Works on Chrome, Edge, and Safari */
@@ -60,12 +62,6 @@
   border: 3px solid none;
 }
 
-/* Works on Firefox */
-.Databox-list {
-  scrollbar-width: 5px;
-  scrollbar-color: #ddd none;
-}
-
 .Databox-watchlist-item {
   display: flex;
   align-items: center;
@@ -77,6 +73,10 @@
   line-height: 25px;
   color:#fff;
   background-color: #333;
+}
+
+.Databox-watchlist-text {
+  text-align: center;
 }
 
 .Databox-active {
@@ -99,7 +99,6 @@
   font-weight: 500;
   font-size: 20px;
   line-height: 25px;
-  text-align: center;
 }
 
 .Databox-item-subtext {
@@ -110,6 +109,39 @@
 }
 
 .Databox-information {
-  padding:20px;
+  padding:18px;
   color:#fff;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 25px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  word-wrap: break-word;
+}
+
+.Databox-information::-webkit-scrollbar {
+  width: 5px;
+  display: none;
+}
+
+.Databox-information:hover::-webkit-scrollbar {
+  display: block;
+}
+
+.Databox-information::-webkit-scrollbar-track {
+  background: none;
+}
+
+.Databox-information::-webkit-scrollbar-thumb {
+  background-color: #ddd;
+  border-radius: 50px;
+  border: 3px solid none;
+}
+
+.Databox-info-desc {
+  width: 100%;
+}
+.Databox-info-date {
+  padding: 10px 0 10px 0;
 }
