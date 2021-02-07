@@ -31,19 +31,17 @@ class App extends React.Component {
   constructor() {
     super();
 
-    /*
     this.state = {
-      currencyPrice: this.getPrice(),
-      currencyInfo: this.getInfo() 
-    }
+      currencyInfo: this.getInfo()
+    } 
 
-    //this.getInfo = this.getInfo.bind(this);
-    //this.getPrice = this.getPrice.bind(this);*/
+    this.getInfo = this.getInfo.bind(this);
+    //this.getPrice = this.getPrice.bind(this);
   }
 
-  /*
+  
   getInfo() {
-    let currency = 'ethereum';
+    let currency = 'Bitcoin';
     fetch(`/getinfo?currency=${currency}`)
       .then(res => res.json())
       .then(data => {
@@ -51,26 +49,15 @@ class App extends React.Component {
       });
   }
 
-  getPrice() {
-    let currency = 'ethereum';
-    fetch(`/getprice?currency=${currency}`)
-      .then(res => res.json())
-      .then(data => { 
-        this.setState({currencyPrice: data})
-      });
-  }*/
-
   render() {
-    
+    console.log(this.state.currencyInfo);
+
     let currencyName = "Test currency"
     let currencyPrice = "27500" 
-    /*
-    if (this.state.currencyPrice !== undefined) {
-      currencyName = `${this.state.currencyPrice[0].name} (${this.state.currencyPrice[0].symbol}) `;
-      currencyPrice = this.state.currencyPrice[0].quote.GBP.price;
-      console.log(this.state.currencyPrice);
-    }*/
-
+    
+    if (this.state.currencyInfo !== undefined) {
+      currencyName = `${this.state.currencyInfo.name} (${this.state.currencyInfo.symbol}) `;
+    }
 
     return (
       <div className="App-container">
